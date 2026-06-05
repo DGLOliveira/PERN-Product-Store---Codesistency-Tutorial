@@ -4,6 +4,8 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import productRoute from "./routers/products.route.js"
+
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +18,7 @@ app.use(helmet());// helmet is a security middleware that helps you protect your
 app.use(morgan("dev"));// log the requests
 
 
+app.use("/api/products",productRoute)
 
 app.get("/test",(req, res)=>{
     console.log(res.getHeaders())
