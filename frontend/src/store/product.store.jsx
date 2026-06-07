@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
 
 export const useProductStore = create((set, get) => ({
     products: [],
@@ -24,7 +24,7 @@ export const useProductStore = create((set, get) => ({
         set({ loading: true });
         try {
             const { formData } = get();
-            await axios.post(`${BASE_URL}/products`, formData);
+            await axios.post(`${BASE_URL}/api/products`, formData);
             await get().fetchProducts();
             get().resetForm();
             toast.success("Product added successfully");
@@ -40,7 +40,7 @@ export const useProductStore = create((set, get) => ({
     fetchProducts: async () => {
         set({ loading: true });
         try {
-            const response = await axios.get(`${BASE_URL}/products`);
+            const response = await axios.get(`${BASE_URL}/api/products`);
             set({ products: response.data.data, error: null });
         } catch (error) {
             if (error.statusCode === 429) {
@@ -57,7 +57,7 @@ export const useProductStore = create((set, get) => ({
   fetchProduct: async (id) => {
     set({ loading: true });
     try {
-      const response = await axios.get(`${BASE_URL}/products/${id}`);
+      const response = await axios.get(`${BASE_URL}/api/products/${id}`);
       set({
         currentProduct: response.data.data,
         formData: response.data.data, // pre-fill form with current product data
@@ -75,7 +75,7 @@ export const useProductStore = create((set, get) => ({
     set({ loading: true });
     try {
       const { formData } = get();
-      const response = await axios.put(`${BASE_URL}/products/${id}`, formData);
+      const response = await axios.put(`${BASE_URL}/api/products/${id}`, formData);
       set({ currentProduct: response.data.data });
       toast.success("Product updated successfully");
     } catch (error) {

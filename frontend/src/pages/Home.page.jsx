@@ -11,7 +11,6 @@ const HomePage = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  console.log(products, loading, error)
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-8 ">
@@ -29,7 +28,7 @@ const HomePage = () => {
       </div>
       
       <AddProductModal />
-      
+
       {error && <div className="alert alert-error mb-8">{error}</div>}
 
       <h1 className="text-3xl font-bold mb-4">Product List</h1>
