@@ -2,6 +2,7 @@ import {useEffect} from 'react'
 import { useProductStore } from '../store/product.store.jsx'
 import { PlusCircleIcon, RefreshCwIcon } from 'lucide-react'
 import ProductCard from '../components/ProductCard.component.jsx'
+import AddProductModal from '../components/addProduct.modal.jsx'
 
 const HomePage = () => {
   const { products, loading, error, fetchProducts } = useProductStore();
@@ -26,6 +27,9 @@ const HomePage = () => {
           <RefreshCwIcon className="size-5" />
         </button>
       </div>
+      
+      <AddProductModal />
+      
       {error && <div className="alert alert-error mb-8">{error}</div>}
 
       <h1 className="text-3xl font-bold mb-4">Product List</h1>
